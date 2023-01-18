@@ -3,15 +3,14 @@ package org.example.flight;
 import java.util.List;
 
 public class FlightsController {
-    FlightsDAO dao;
-    public FlightsController(FlightsDAO dao){
-        this.dao=dao;
-    }
-    public List<Flight> getAllFlights(){
-        return dao.getAllFlights();
+    FlightService service;
+
+    public FlightsController(FlightService service) {
+        this.service = service;
     }
 
-//    public Flight getFlight(){
-//
-//    }
+    public List<Flight> getAllFlights() {
+        return service.getAllFlights();
+    }
+
 }

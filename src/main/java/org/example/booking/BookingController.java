@@ -5,20 +5,19 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class BookingController {
-    BookingsDAO dao;
+    BookingService service;
 
-    public BookingController(BookingsDAO dao) {
-        this.dao = dao;
+    public BookingController(BookingService service) {
+        this.service = service;
     }
     public List<Booking> getBookingOfUser(String login){
-        return  dao.getAllBookings()
-                .stream().filter(booking -> booking.getUserLogin().equals(login)).toList();
+        return  service.getBookingOfUser(login);
 
     }
     public void addBooking(Booking booking){
-        dao.addBooking(booking);
+        service.addBooking(booking);
     }
     public void deleteBooking(Booking booking){
-        dao.deleteBooking(booking);
+        service.deleteBooking(booking);
     }
 }

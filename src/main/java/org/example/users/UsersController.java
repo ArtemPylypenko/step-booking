@@ -3,22 +3,22 @@ package org.example.users;
 import java.util.List;
 
 public class UsersController {
-    UsersDao dao;
+    UserService service;
 
-    public UsersController(UsersDao dao) {
-        this.dao = dao;
+    public UsersController(UserService service) {
+        this.service = service;
     }
 
-    public List<User> getAllUsers(){
-        return dao.getAllUsers();
+    public List<User> getAllUsers() {
+        return service.getAllUsers();
     }
 
-    public void addUser(User u){
-        dao.addUser(u);
+    public void addUser(User u) {
+        service.addUser(u);
     }
 
-    public boolean checkUser(User u){
-        return dao.checkUser(u);
+    public boolean checkUser(User u) {
+        return service.checkUser(u);
     }
 
 }
