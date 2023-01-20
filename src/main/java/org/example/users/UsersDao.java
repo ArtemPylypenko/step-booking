@@ -1,15 +1,15 @@
 package org.example.users;
 
-import org.example.booking.Booking;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UsersDao implements UserDao {
-    List<User> users;
+    ArrayList<User> users;
+    private final String filename;
 
-    public UsersDao() {
+    public UsersDao(String filename) {
+        this.filename = filename;
         users = new ArrayList<>();
         load();
     }
@@ -21,11 +21,16 @@ public class UsersDao implements UserDao {
 
     @Override
     public void addUser(User u) {
-        users.add(u);
-        try {
-            save();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (!checkUser(u)) {
+            users.add(u);
+            try {
+                save();
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            System.out.println("Such user exist!");
         }
     }
 
@@ -33,11 +38,12 @@ public class UsersDao implements UserDao {
     public boolean checkUser(User u) {
         return users.stream().anyMatch(user -> user.getLogin().equals(u.getLogin()));
     }
-    private void load(){
+
+    private void load() {
         try {
-            FileInputStream fis = new FileInputStream("usersDB.txt");
+            FileInputStream fis = new FileInputStream(filename);
             ObjectInputStream ois = new ObjectInputStream(fis);
-            users = (ArrayList<User>)ois.readObject();
+            users = (ArrayList<User>) ois.readObject();
             ois.close();
         } catch (IOException e) {
             System.out.println("An error occurred.");
@@ -46,8 +52,9 @@ public class UsersDao implements UserDao {
             throw new RuntimeException(e);
         }
     }
+
     public void save() throws IOException {
-        FileOutputStream fos = new FileOutputStream("usersDB.txt");
+        FileOutputStream fos = new FileOutputStream(filename, false);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
 
         oos.writeObject(users);

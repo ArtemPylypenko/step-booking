@@ -6,8 +6,10 @@ import java.util.ArrayList;
 
 public class BookingsDAO implements BookingDao {
     private ArrayList<Booking> bookings;
+    private final String fileName;
 
-    public BookingsDAO() {
+    public BookingsDAO(String fileName) {
+        this.fileName = fileName;
         bookings = new ArrayList<>();
         loadAll();
     }
@@ -47,7 +49,7 @@ public class BookingsDAO implements BookingDao {
 
     private void loadAll() {
         try {
-            FileInputStream fis = new FileInputStream("bookindDB.txt");
+            FileInputStream fis = new FileInputStream(fileName);
             ObjectInputStream ois = new ObjectInputStream(fis);
             bookings = (ArrayList<Booking>)ois.readObject();
             ois.close();
@@ -61,7 +63,7 @@ public class BookingsDAO implements BookingDao {
 
     private void save() throws IOException {
 
-        FileOutputStream fos = new FileOutputStream("bookindDB.txt");
+        FileOutputStream fos = new FileOutputStream(fileName,false);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
 
         oos.writeObject(bookings);

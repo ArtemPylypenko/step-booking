@@ -127,6 +127,7 @@ public class MyConsoleClass {
             String password = scanner.nextLine();
             user = new User(login, password);
             if (usersController.checkUser(user)) {
+                System.out.println("Old");
                 showSystem();
             } else {
                 System.out.println("new user!");

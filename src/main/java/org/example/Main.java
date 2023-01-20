@@ -15,10 +15,10 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws MyConsoleException {
-        UsersDao usersDao = new UsersDao();
+        UsersDao usersDao = new UsersDao("usersDB.txt");
         Scanner scanner = new Scanner(System.in);
         FlightsDAO flightsDao = new FlightsDAO();
-        BookingsDAO bookingsDAO = new BookingsDAO();
+        BookingsDAO bookingsDAO = new BookingsDAO("bookingsDB.txt");
         for (int i = 0; i < 50; i++) {
             flightsDao.addFlight(new FlightGenerator().generate());
         }
